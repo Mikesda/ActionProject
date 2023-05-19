@@ -1,87 +1,88 @@
-document.querySelector("#salvar").addEventListener("click", cadastrar);
+document.querySelector("#salvar").addEventListener("click", cadastrar());
 
-let lista_tarefas = []
+let lista_tarefas = [];
 
 window.addEventListener("load", () => {
-    lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || []
-    atualizar()
-})
+  lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
+  atualizar();
+});
 
-document.querySelector("#pendentes").addEventListener("click",() => {
-    lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || []
-    lista_tarefas = lista_tarefas.filter(tarefa => !tarefa.concluida)
-    atualizar()
-})
+document.querySelector("#list").addEventListener("click", () => {
+  lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
+  lista_tarefas = lista_tarefas.filter((tarefa) => !tarefa.concluida);
+  atualizar();
+});
 
 document.querySelector("#busca").addEventListener("keyup", () => {
-    lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || []
-    const nome = document.querySelector("busca").value
-    lista_tarefas=
-        lista_tarefas.filter(tarefa => tarefa.nome.includes(nome))
-    atualizar()
-})
+  lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
+  const nome = document.querySelector("#busca").value;
+  lista_tarefas = lista_tarefas.filter((tarefa) => tarefa.nome.includes(nome));
+  atualizar();
+});
 
-document.querySelector("#concluidas").addEventListener("click", () => {
-    lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || []
-    lista_tarefas = lista_tarefas.filter(tarefa => tarefa.concluida)
-    atualizar()
-})
+document.querySelector("#finalizados").addEventListener("click", () => {
+  lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
+  lista_tarefas = lista_tarefas.filter((tarefa) => tarefa.concluida);
+  atualizar();
+});
 
 function atualizar() {
-    localStorage.setItem("tarefas", JSON.stringify(tarefas))
-    document.querySelector("#tarefas").innerHTML = ""
-    tarefas.forEach(tarefa =>
-        document.querySelector("#tarefas").innerHTML += criarCard(tarefa))
+  localStorage.setItem("tarefas", JSON.stringify(tarefas));
+  document.querySelector("#tarefas").innerHTML = "";
+  tarefas.forEach(
+    (tarefa) =>
+      (document.querySelector("#tarefas").innerHTML += criarCard(tarefa))
+  );
 }
 
 function filtrar(lista) {
-    document.querySelector("#tarefas").innerHTML = ""
-    lista.forEach(tarefa =>
-        document.querySelector("#tarefas").innerHTML += criarCard(tarefa)
-    )
+  document.querySelector("#tarefas").innerHTML = "";
+  lista.forEach(
+    (tarefa) =>
+      (document.querySelector("#tarefas").innerHTML += criarCard(tarefa))
+  );
 }
 
 function cadastrar() {
-    let nome = document.querySelector("#nome").value;
-    let marca = document.querySelector("#marca").value;
-    let categoria = document.querySelector("#categoria").value;
-    const modal = bootstrap.Modal.getInstance(
-        document.querySelector("#exampleModal"))
+  let nome = document.querySelector("#nome").value;
+  let marca = document.querySelector("#marca").value;
+  let categoria = document.querySelector("#categoria").value;
+  const modal = bootstrap.Modal.getInstance(
+    document.querySelector("#exampleModal")
+  );
 
-    const tarefa = {
-        id: Date.now(),
-        nome,
-        marca,
-        categoria,
-        concluida: false
-    }
+  const tarefa = {
+    id: Date.now(),
+    nome,
+    marca,
+    categoria,
+    concluida: false,
+  };
 
-    if (tarefa.nome.length == 0){
-        document.querySelector("#nome").classList.add("is-invalid")
-        return
-    }
+  if (tarefa.nome.length == 0) {
+    document.querySelector("#nome").classList.add("is-invalid");
+    return;
+  }
 
-    lista_tarefas.push(tarefa)
+  lista_tarefas.push(tarefa);
 
-    document.querySelector("#tarefas").innerHTML += criarCard(tarefa)
-    document.querySelector("nome").value = ""
-    document.querySelector("marca").value = ""
+  document.querySelector("#tarefas").innerHTML += criarCard(tarefa);
+  document.querySelector("#nome").value = "";
+  document.querySelector("#marca").value = "";
 
-    
-    salvar()
-    modal.hide()
+  salvar();
+  modal.hide();
 }
 
-    // if (!isValid(tarefa.Nome, document.querySelector("#nome"))) return
-    // if (!isValid(tarefa.Marca, document.querySelector("#marca"))) return
+// if (!isValid(tarefa.Nome, document.querySelector("#nome"))) return
+// if (!isValid(tarefa.Marca, document.querySelector("#marca"))) return
 
-    // tarefas.push(tarefa)
+// tarefas.push(tarefa)
 
-    // atualizar()
-    // modal.hide()
+// atualizar()
+// modal.hide()
 
-    //   document.querySelector("#tarefas").innerHTML += criarCard(tarefa);
-
+//   document.querySelector("#tarefas").innerHTML += criarCard(tarefa);
 
 // function isValid(valor, campo) {
 //     if (valor.length == 0) {
@@ -95,37 +96,37 @@ function cadastrar() {
 //     }
 // }
 
-function atualizar(){
-    document.querySelector("#tarefas").innerHTML = ""
-    lista_tarefas.forEach((tarefa) => {
-        document.querySelector("tarefas");innerHTML += criarCard(tarefa)
-    })
+function atualizar() {
+  document.querySelector("#tarefas").innerHTML = "";
+  lista_tarefas.forEach((tarefa) => {
+    document.querySelector("#tarefas").innerHTML += criarCard(tarefa);
+  });
 }
 
-function salvar(){
-    localStorage.setItem("lista_tarefas", JSON.stringify(lista_tarefas))
+function salvar() {
+  localStorage.setItem("lista_tarefas", JSON.stringify(lista_tarefas));
 }
 
 function apagar(id) {
-    lista_tarefas = lista_tarefas.filter(tarefa => tarefa.id !== id)
-    salvar()
-    atualizar()
+  lista_tarefas = lista_tarefas.filter((tarefa) => tarefa.id !== id);
+  salvar();
+  atualizar();
 }
 
 function concluir(id) {
-    let tarefa_encontrada = lista_tarefas.find(tarefa => tarefa.id == id)
-    tarefa_encontrada.concluida = true
-    salvar()
-    atualizar()
+  let tarefa_encontrada = lista_tarefas.find((tarefa) => tarefa.id == id);
+  tarefa_encontrada.concluida = true;
+  salvar();
+  atualizar();
 }
 // function apagar(botao) {
 //   botao.parentNode.parentNode.parentNode.remove();
 // }
 
 function criarCard(tarefa) {
-    let disabled = tarefa.concluida ? "disabled" : ""
+  let disabled = tarefa.concluida ? "disabled" : "";
 
-    const card = `
+  const card = `
             <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="card">
                 <div class="card-header">
@@ -146,6 +147,6 @@ function criarCard(tarefa) {
                 </div> <!-- card footer -->
             </div> <!-- card -->
         </div> <!-- col -->
-        `
-    return card
+        `;
+  return card;
 }
