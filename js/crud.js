@@ -132,7 +132,7 @@ function criarCard(tarefa) {
                     ${tarefa.nome}
                 </div>
                 <div class="card-body">
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text"></p>
                     <p class="card-text">${tarefa.categoria}</p>
                     <span class="badge text-bg-warning">${tarefa.marca}pt</span>
                 </div>
