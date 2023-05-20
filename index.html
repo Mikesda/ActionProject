@@ -39,12 +39,12 @@
             <li>
               <hr class="dropdown-divider" />
             </li>
-            <li><a class="dropdown-item" href="#">Cadastrar</a></li>
+            <li><a  class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Cadastrar</a></li>
           </ul>
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="filtrar" aria-label="filtrar" />
+        <input id="busca" class="form-control me-2" type="search" placeholder="filtrar" aria-label="filtrar" />
         <button class="btn btn-outline-success" type="submit">
           Buscar
         </button>
@@ -86,6 +86,10 @@
                 <option value="PVC">PVC</option>
                 <option value="Plástico">Plástico</option>
               </select>
+              <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <input type="text" class="form-control" id="descricao">
+              </div>
             </div>
           </div>
         </div>
@@ -98,7 +102,7 @@
   </div>
 
   <script src="./js/crud.js"></script>
-  <script src="./js/filtro.js"></script>
+  <!-- <script src="./js/filtro.js"></script> -->
 </body>
 
 </html>

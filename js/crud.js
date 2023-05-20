@@ -1,13 +1,17 @@
-document.querySelector("#salvar").addEventListener("click", cadastrar());
+document.querySelector("#salvar").addEventListener("click", cadastrar);
+document.querySelector("#salvar").addEventListener("click", () => {
+  console.log("Clicou vagabundo");
+});
 
 let lista_tarefas = [];
 
 window.addEventListener("load", () => {
+  console.log("window.addEventListener");
   lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
   atualizar();
 });
 
-document.querySelector("#list").addEventListener("click", () => {
+document.querySelector("#filtrar_pendentes").addEventListener("click", () => {
   lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
   lista_tarefas = lista_tarefas.filter((tarefa) => !tarefa.concluida);
   atualizar();
@@ -20,7 +24,7 @@ document.querySelector("#busca").addEventListener("keyup", () => {
   atualizar();
 });
 
-document.querySelector("#finalizados").addEventListener("click", () => {
+document.querySelector("#filtrar_concluidas").addEventListener("click", () => {
   lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
   lista_tarefas = lista_tarefas.filter((tarefa) => tarefa.concluida);
   atualizar();
@@ -47,6 +51,7 @@ function cadastrar() {
   let nome = document.querySelector("#nome").value;
   let marca = document.querySelector("#marca").value;
   let categoria = document.querySelector("#categoria").value;
+  let descricao = document.querySelector("#descricao").value;
   const modal = bootstrap.Modal.getInstance(
     document.querySelector("#exampleModal")
   );
@@ -56,11 +61,19 @@ function cadastrar() {
     nome,
     marca,
     categoria,
+    descricao,
     concluida: false,
   };
 
+  console.log("Tarefa: ", tarefa);
+
   if (tarefa.nome.length == 0) {
     document.querySelector("#nome").classList.add("is-invalid");
+    return;
+  }
+
+  if (tarefa.descricao.length == 0) {
+    document.querySelector("#descricao").classList.add("is-invalid");
     return;
   }
 
@@ -69,8 +82,10 @@ function cadastrar() {
   document.querySelector("#tarefas").innerHTML += criarCard(tarefa);
   document.querySelector("#nome").value = "";
   document.querySelector("#marca").value = "";
+  document.querySelector("#descricao").value = "";
 
   salvar();
+  atualizar();
   modal.hide();
 }
 
@@ -104,6 +119,7 @@ function atualizar() {
 }
 
 function salvar() {
+  console.log("Chamou a função salvar");
   localStorage.setItem("lista_tarefas", JSON.stringify(lista_tarefas));
 }
 
@@ -133,7 +149,7 @@ function criarCard(tarefa) {
                     ${tarefa.nome}
                 </div>
                 <div class="card-body">
-                    <p class="card-text"></p>
+                    <p class="card-text">${tarefa.descricao}</p>
                     <p class="card-text">${tarefa.categoria}</p>
                     <span class="badge text-bg-warning">${tarefa.marca}pt</span>
                 </div>
