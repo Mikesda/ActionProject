@@ -1,12 +1,8 @@
 document.querySelector("#salvar").addEventListener("click", cadastrar);
-document.querySelector("#salvar").addEventListener("click", () => {
-  console.log("Clicou vagabundo");
-});
 
 let lista_tarefas = [];
 
 window.addEventListener("load", () => {
-  console.log("window.addEventListener");
   lista_tarefas = JSON.parse(localStorage.getItem("lista_tarefas")) || [];
   atualizar();
 });
@@ -65,8 +61,6 @@ function cadastrar() {
     concluida: false,
   };
 
-  console.log("Tarefa: ", tarefa);
-
   if (tarefa.nome.length == 0) {
     document.querySelector("#nome").classList.add("is-invalid");
     return;
@@ -119,7 +113,6 @@ function atualizar() {
 }
 
 function salvar() {
-  console.log("Chamou a função salvar");
   localStorage.setItem("lista_tarefas", JSON.stringify(lista_tarefas));
 }
 
